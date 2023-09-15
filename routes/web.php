@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use App\Http\Controllers\InertiaTestController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,6 +20,9 @@ use Inertia\Inertia;
 Route::get('/inertia-test', function () {
     return Inertia::render('InertiaTest');
 });
+
+Route::get('/inertia/index', [InertiaTestController::class, 'index'])->name('inertia.index');
+Route::get('inertia/show/{id}', [InertiaTestController::class, 'show'])->name('inertia.show');
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
