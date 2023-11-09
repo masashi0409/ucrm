@@ -1,12 +1,23 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head, Link } from '@inertiajs/vue3';
+import { ref } from 'vue';
+import { Inertia } from '@inertiajs/inertia';
 import FlashMessage from '../../Components/FlashMessage.vue'
 import Pagination from '@/Components/Pagination.vue'
+
 
 defineProps({
     customers: Object
 })
+
+// 検索入力フォームのref
+// const search = ref('')
+
+// const searchCustomers = () => {
+//     console.log(search.value)
+//     Inertia.get(route('customers.index', { search: search.value }))
+// }
 
 </script>
 
@@ -28,6 +39,12 @@ defineProps({
                             <div class="container px-5 py-8 mx-auto">
                                 <FlashMessage />
                                 <div class="flex pl-4 my-4 lg:w-2/3 w-full mx-auto">
+                                    <!-- <div>
+                                        <input type="text" name="search" v-model="search">
+                                        <button class="bg-blue-300 text-white py-2 px-2"
+                                            @click="searchCustomers"
+                                        >検索</button>
+                                    </div> -->
                                     <Link 
                                         as="button"
                                         :href="route('customers.create')"
