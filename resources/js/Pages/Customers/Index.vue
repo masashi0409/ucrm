@@ -1,10 +1,10 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head, Link } from '@inertiajs/vue3';
-import { ref } from 'vue';
-import { Inertia } from '@inertiajs/inertia';
+import { ref, reactive  } from 'vue';
 import FlashMessage from '../../Components/FlashMessage.vue'
 import Pagination from '@/Components/Pagination.vue'
+import axios from 'axios';
 
 
 defineProps({
@@ -12,12 +12,22 @@ defineProps({
 })
 
 // 検索入力フォームのref
-// const search = ref('')
+const search = ref('')
 
-// const searchCustomers = () => {
-//     console.log(search.value)
-//     Inertia.get(route('customers.index', { search: search.value }))
-// }
+const searchedCustomers = reactive({})
+const searchCustomers = async () => {
+    console.log(search.value)
+    try{
+        console.log(search.value)
+        await axios.get(`/api/searchCustomers/?search=${search.value}`)
+            .then( res => {
+                console.log(res.data)
+                searchedCustomers.value = res.data
+            })
+    } catch(e) {
+        console.log(e)
+    }
+}
 
 </script>
 
@@ -39,12 +49,12 @@ defineProps({
                             <div class="container px-5 py-8 mx-auto">
                                 <FlashMessage />
                                 <div class="flex pl-4 my-4 lg:w-2/3 w-full mx-auto">
-                                    <!-- <div>
+                                    <div>
                                         <input type="text" name="search" v-model="search">
-                                        <button class="bg-blue-300 text-white py-2 px-2"
+                                        <button class="bg-indigo-500 text-white py-2 px-6 rounded"
                                             @click="searchCustomers"
                                         >検索</button>
-                                    </div> -->
+                                    </div>
                                     <Link 
                                         as="button"
                                         :href="route('customers.create')"
@@ -70,7 +80,25 @@ defineProps({
                                                 </th>
                                             </tr>
                                         </thead>
-                                        <tbody>
+                                        <tbody v-if="searchedCustomers.value">
+                                            <tr v-for="customer in searchedCustomers.value.data" :key="customer.id">
+                                                <td class="border-b-2 border-gray-200 px-4 py-3">
+                                                    <Link class="text-blue-400" :href="route('customers.show', {customer: customer.id})">
+                                                        {{ customer.id }}
+                                                    </Link>
+                                                </td>
+                                                <td class="border-b-2 border-gray-200 px-4 py-3">
+                                                    {{  customer.name }}
+                                                </td>
+                                                <td class="border-b-2 border-gray-200 px-4 py-3">
+                                                    {{ customer.kana }}
+                                                </td>
+                                                <td class="border-b-2 border-gray-200 px-4 py-3">
+                                                    {{ customer.tel }}
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                        <tbody v-else>
                                             <tr v-for="customer in customers.data" :key="customer.id">
                                                 <td class="border-b-2 border-gray-200 px-4 py-3">
                                                     <Link class="text-blue-400" :href="route('customers.show', {customer: customer.id})">
@@ -91,7 +119,10 @@ defineProps({
                                     </table>
                                 </div>
                             </div>
-                            <Pagination class="mt-6" :links="customers.links"></Pagination>
+                            <Pagination v-if="searchedCustomers.value"
+                                class="mt-6" :links="searchedCustomers.links"></Pagination>
+                            <Pagination v-else
+                                class="mt-6" :links="customers.links"></Pagination>
                         </section>
                     </div>
                 </div>

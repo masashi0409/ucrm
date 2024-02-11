@@ -13,13 +13,11 @@ class CustomerController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request) // get request paramsが取れない・・
     {
-        // $customers = Customer::searchCustomers()
         $customers = Customer::
             select('id', 'name', 'kana', 'tel')
             ->paginate(10); // pagination
-
         return Inertia::render('Customers/Index', [
             'customers' => $customers
         ]);
