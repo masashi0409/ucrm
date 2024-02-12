@@ -1,10 +1,10 @@
 <script setup>
 import { onMounted, ref, reactive } from 'vue'
-import { Head, Link } from '@inertiajs/vue3';
+import { Head } from '@inertiajs/vue3';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import FlashMessage from '../../Components/FlashMessage.vue'
 import Pagination from '@/Components/Pagination.vue'
-import axios from 'axios';
+import dayjs from 'dayjs'
 
 const props = defineProps({
     totals: Object
@@ -54,9 +54,6 @@ onMounted(() => {
                                                     合計金額
                                                 </th>
                                                 <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
-                                                    ステータス
-                                                </th>
-                                                <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
                                                     購入日
                                                 </th>
                                             </tr>
@@ -73,10 +70,7 @@ onMounted(() => {
                                                     {{ total.total }}
                                                 </td>
                                                 <td class="border-b-2 border-gray-200 px-4 py-3">
-                                                    {{ total.status }}
-                                                </td>
-                                                <td class="border-b-2 border-gray-200 px-4 py-3">
-                                                    {{ total.created_at }}
+                                                    {{ dayjs(total.created_at).format('YYYY-MM-DD HH:mm:ss') }}
                                                 </td>
                                             </tr>
                                         </tbody>
