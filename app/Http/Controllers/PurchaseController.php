@@ -10,6 +10,7 @@ use App\Http\Requests\UpdatePurchaseRequest;
 use App\Models\Purchase;
 use App\Models\Customer;
 use App\Models\Item;
+use App\Models\Subtotal;
 
 class PurchaseController extends Controller
 {
@@ -18,7 +19,26 @@ class PurchaseController extends Controller
      */
     public function index()
     {
-        //
+        // dd(Subtotal::paginate(5));
+
+        // 一つの購入（ユーザー一人がいくつかの商品×個数）の合計
+        $totals = Subtotal::groupBy('id')
+            ->selectRaw('
+                id,
+                sum(subtotal) as total,
+                customer_name,
+                status,
+                created_at
+            ')
+            ->paginate(10);
+
+        // dd($totals);
+
+        return Inertia::render('Purchases/Index',
+            [
+                'totals' => $totals
+            ]
+            );
     }
 
     /**
