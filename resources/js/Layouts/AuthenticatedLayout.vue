@@ -37,6 +37,9 @@ const showingNavigationDropdown = ref(false);
                                     Dashboard
                                 </NavLink>
                                 <NavLink :href="route('purchases.create')" :active="route().current('purchases.create')">
+                                    Purchase
+                                </NavLink>
+                                <NavLink :href="route('purchases.index')" :active="route().current('purchases.index')">
                                     Purchases
                                 </NavLink>
                                 <NavLink :href="route('items.index')" :active="route().current('items.index')">

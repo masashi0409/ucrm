@@ -91,15 +91,16 @@ const setCustomerId = id => {
                                                 <div class="relative">
                                                     <label for="date" class="leading-7 text-sm text-gray-600">日付</label>
                                                     <input
-                                                        type="text" id="date" name="date"
+                                                        type="date" id="date" name="date"
                                                         v-model="form.date"
                                                         class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                                                 </div>
                                             </div>
                                             <div class="p-2 w-full">
                                                 <div class="">
-                                                    <label for="customer" class="leading-7 text-sm text-gray-600">会員</label>
+                                                    <label class="leading-7 text-sm text-gray-600">会員検索用入力</label>
                                                     <MicroModal @update:customerId="setCustomerId" />
+                                                    <label for="customer" class="leading-7 text-sm text-gray-600">会員選択</label>
                                                     <select
                                                         name="customer"
                                                         v-model="form.customer_id"
