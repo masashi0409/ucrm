@@ -1,6 +1,6 @@
 <script setup>
 import { onMounted, ref, reactive } from 'vue'
-import { Head } from '@inertiajs/vue3';
+import { Head, Link } from '@inertiajs/vue3';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import FlashMessage from '../../Components/FlashMessage.vue'
 import Pagination from '@/Components/Pagination.vue'
@@ -61,7 +61,9 @@ onMounted(() => {
                                         <tbody v-if="totals">
                                             <tr v-for="total in totals" :key="total.id">
                                                 <td class="border-b-2 border-gray-200 px-4 py-3">
+                                                    <Link class="text-blue-400" :href="route('purchases.show', { purchase: total.id})">
                                                         {{ total.id }}
+                                                    </Link>
                                                 </td>
                                                 <td class="border-b-2 border-gray-200 px-4 py-3">
                                                     {{  total.customer_name }}
