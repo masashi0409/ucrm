@@ -26,7 +26,7 @@ const form = reactive({
 /**
  * 登録ボタン押下時、登録処理：Itemsにpost
  */
-const updateItem = id=> {
+const updateItem = id => {
     Inertia.put(route('items.update', {item: id}), form);
 }
 
